@@ -11,8 +11,9 @@ export default class Overall extends Component{
     async componentDidMount(){
         const {default: reducer} = await import('./store');
         const Containers = await import('./containers');
-        this.setState({...Containers});
+        // 要把注册reducer放到渲染组件之前
         injectReducer('overall', reducer)
+        this.setState({...Containers});
     }
     render(){
         return (

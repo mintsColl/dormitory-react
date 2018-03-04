@@ -1,3 +1,4 @@
 import NewsTable from './NewsTable';
 import NewsModal from './NewsModal';
-export {NewsTable, NewsModal};
+import NewsDetail from './NewsDetail';
+export {NewsTable, NewsModal, NewsDetail};

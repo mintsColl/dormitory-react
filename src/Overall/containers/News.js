@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux'
 import {actions as platformActions} from '../../_platform/store/global';
 import {Tabs, Button} from 'antd';
-import {NewsTable, NewsModal} from '../components/News'
+import {NewsTable, NewsModal, NewsDetail} from '../components/News'
 import {actions} from '../store/news'
 import './Tab.less'
 const TabPane = Tabs.TabPane;
@@ -27,7 +27,7 @@ export default class News extends Component{
         }
     }
     render(){
-        const {news_visible = false} = this.props
+        const {news_visible = false, news_detail = false} = this.props
         return (
             <div style={{overflow: 'hidden', padding: 20, 'position':'relative'}}>
 				<DynamicTitle title="新闻管理" {...this.props}/>
@@ -41,6 +41,7 @@ export default class News extends Component{
 					</TabPane>
 				</Tabs>
                 {news_visible && <NewsModal {...this.props} {...this.state}/>}
+                {news_detail && <NewsDetail {...this.props}/>}
 			</div>
         )
     }

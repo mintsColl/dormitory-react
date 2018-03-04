@@ -42,6 +42,8 @@ class NewsModal extends Component{
                 visible = {news_visible}
                 footer = {null}
                 maskClosable={true}
+                onOk = {this.postData.bind(this)}
+                onCancel = {this.cancel.bind(this)}
                 >
                     <Form>
                         <Row>
