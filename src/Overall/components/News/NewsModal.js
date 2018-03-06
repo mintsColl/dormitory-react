@@ -12,17 +12,27 @@ class NewsModal extends Component{
 	}
     componentDidMount(){
         setTimeout(() => {
+            const {form:{setFieldsValue}, news_visible = {type:''}, editData} = this.props;
             const elem = this.refs.editorElem
             editor = new E(elem);
+            // 将内容实时的保存起来
             editor.customConfig.onChange = html => {
                 this.setState({content: html})
             }
             editor.customConfig.zIndex = 1000;
             editor.create();
+            if (news_visible.type === "edit") {
+                // 记得加上对象
+                setFieldsValue({'title': editData.title})
+                editor.txt.html(editData.newsContent)
+            }
         },0)
     }
     postData(){
-        const {actions:{setNewsShow}} = this.props;
+        const {actions:{setNewsShow}, form:{validateFields}} = this.props;
+        validateFields(async (err, values) => {
+            
+        })
         setNewsShow(false);
     }
     cancel(){
@@ -34,12 +44,12 @@ class NewsModal extends Component{
 			labelCol: {span: 8},
 			wrapperCol: {span: 16},
 		};
-        const {form:{getFieldDecorator}, news_visible = false} = this.props;
+        const {form:{getFieldDecorator}, news_visible = {show: false}} = this.props;
         return(
             <Modal
                 title = '发布新闻'
                 width = '80%'
-                visible = {news_visible}
+                visible = {news_visible.show}
                 footer = {null}
                 maskClosable={true}
                 onOk = {this.postData.bind(this)}

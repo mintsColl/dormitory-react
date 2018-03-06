@@ -1,2 +1,4 @@
 import NoticeTable from './NoticeTable'
-export {NoticeTable}
+import NoticeModal from './NoticeModal'
+import NoticeDetail from './NoticeDetail'
+export {NoticeTable, NoticeModal, NoticeDetail}

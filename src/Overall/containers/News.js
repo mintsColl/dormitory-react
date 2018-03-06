@@ -33,7 +33,10 @@ export default class News extends Component{
 				<DynamicTitle title="新闻管理" {...this.props}/>
                 <Button className='sendNews' type="primary" onClick={() => {
                     const {actions:{setNewsShow}} = this.props
-                    setNewsShow(true)
+                    setNewsShow({
+                        show:true,
+                        type:'add'
+                    })
                 }}>发布新闻</Button>
 				<Tabs>
 					<TabPane tab="新闻列表" key="1">

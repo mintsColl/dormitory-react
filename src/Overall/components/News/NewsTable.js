@@ -18,6 +18,19 @@ export default class NewsTable extends Component{
         })
         this.setState({dataSource: data})
     }
+    detail(newsContent){
+        const {actions: {setNewsContent, setNewsDetail}} = this.props;
+        setNewsContent(newsContent)
+        setNewsDetail(true)
+    }
+    edit(record){
+        const {actions:{setEditData, setNewsShow}} = this.props;
+        setEditData(record);
+        setNewsShow({
+            show:true,
+            type:'edit'
+        })
+    }
     render(){
         return (
             <Table
@@ -51,11 +64,13 @@ export default class NewsTable extends Component{
     columns = [{
         title: '序号',
         dataIndex: 'index',
+        width: '7%',
         key: 'index'
     },{
         dataIndex: 'title',
         key: 'title',
-        title: '标题'
+        title: '标题',
+        width: '10%',
     }, {
         title: '新闻内容',
         width: '40%',
@@ -75,16 +90,12 @@ export default class NewsTable extends Component{
                 <div>
                     <a><Icon onClick={this.detail.bind(this, record.newsContent)} name='eye'/></a>
                     <Divider type="vertical"/>
-                    <a><Icon name='edit'/></a>
+                    <a><Icon onClick={this.edit.bind(this, record)} name='edit'/></a>
                     <Divider type="vertical"/>
                     <a><Icon name='trash-o'/></a>
                 </div>
             )
         }
     }]
-    detail(newsContent){
-        const {actions: {setNewsContent, setNewsDetail}} = this.props;
-        setNewsContent(newsContent)
-        setNewsDetail(true)
-    }
+
 }

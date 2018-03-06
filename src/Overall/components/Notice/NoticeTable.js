@@ -18,6 +18,16 @@ export default class NoticeTable extends Component{
         })
         this.setState({dataSource})
     }
+    detail(content){
+        const {actions:{setNoticeContent, setNoticeDetail}} = this.props;
+        setNoticeContent(content);
+        setNoticeDetail(true)
+    }
+    edit(record){
+        const {actions:{setNoticeShow, setNoticeData}} = this.props;
+        setNoticeShow({show: true, type: 'edit'})
+        setNoticeData(record)
+    }
     render(){
         return(
             <Table
@@ -55,9 +65,9 @@ export default class NoticeTable extends Component{
         title: '操作',
         render:(text, record, index) => (
             <span>
-                <a><Icon name='eye'/></a>
+                <a><Icon onClick={this.detail.bind(this, record.content)} name='eye'/></a>
                 <Divider type="vertical"/>
-                <a><Icon name='edit'/></a>
+                <a><Icon onClick={this.edit.bind(this, record)} name='edit'/></a>
                 <Divider type="vertical"/>
                 <a><Icon name='trash-o'/></a>
             </span>
