@@ -40,14 +40,14 @@ export default class Header extends Component {
 						<a className="user">admin</a>
 						<Icon name="sign-out" title="退出登录" onClick={this.signOut.bind(this)}/>
 					</div>
-					<div className="head-fn">
+					{/* <div className="head-fn">
 						<Link to='/selfcare'>
 							<Icon name="tasks" title="个人任务"/>
 						</Link>
 						<Link to='/modeldown'>
 							<Icon name="download" title="下载模型"/>
 						</Link>
-					</div>
+					</div> */}
 				</div>
 			</header>);
 	}
@@ -88,10 +88,10 @@ export default class Header extends Component {
 		path: '/overall',
 		icon: <Icon name="cubes"/>,
 	}, {
-		key: 'datum',
-		id: 'DATUM',
+		key: 'repair',
+		id: 'REPAIR',
 		title: '报修和维修管理',
-		path: '/datum',
+		path: '/repair',
 		icon: <Icon name="wrench"/>
 	}, {
 		key: 'design',

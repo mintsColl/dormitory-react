@@ -12,6 +12,7 @@ import Home from './Home/containers/Home'
 // 动态标签页组件
 import DynamicTabs from './_platform/layout/DynamicTabs'
 import Overall from './Overall'
+import Repair from './Repair'
 class App extends Component {
     render() {
         return (
@@ -23,6 +24,7 @@ class App extends Component {
                         {Login && <Route exact={true} path="/" component={Login} />}
                         {Home && <Route path="/home" component={Home} />}
                         {Overall && <Route path="/overall" component={Overall} />}
+                        {Repair && <Route path="/repair" component={Repair} />}
                     </div>
                 </BrowserRouter>
             </Provider>
