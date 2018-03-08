@@ -18,6 +18,7 @@ export class WriteOrder extends Component{
         return (
             <div style={{overflow: 'hidden', padding: 20, 'position':'relative'}}>
                 <DynamicTitle title="填写报修单" {...this.props}/>
+                
             </div>
         )
     }
