@@ -9,15 +9,13 @@ import {Icon} from 'react-fa';
 import {actions as platformActions} from '../_platform/store/global'
 export default class Repair extends Component{
     async componentDidMount(){
-        // const {default: reducer} = await import('./store');
-        const Containers = await import('./containers');
-        console.log("Containers:",Containers);
+        const {default: reducer} = await import('./store');
         // 要把注册reducer放到渲染组件之前
-        // injectReducer('repair', reducer)
+        injectReducer('repair', reducer)
+        const Containers = await import('./containers');
         this.setState({...Containers});
     }
     render() {
-        console.log(this.state);
 		return (
 			<Body>
     			<Aside>
@@ -38,7 +36,7 @@ export default class Repair extends Component{
         children: [{
             key: 'WriteOrder',
             id: 'WriteOrder',
-            name: '填写维修单',
+            name: '报修单管理',
             path: '/repair',
             icon: <Icon name="pencil" />,
             exact: true

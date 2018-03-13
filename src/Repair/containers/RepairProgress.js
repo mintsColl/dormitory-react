@@ -5,6 +5,7 @@ import {DynamicTitle} from '../../_platform/layout/DynamicTitle'
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux'
 import {actions as platformActions} from '../../_platform/store/global';
+import {OrderTable} from '../components/RepairProgress'
 @connect(
     state => {
         return {...state}
@@ -18,6 +19,7 @@ export class RepairProgress extends Component{
         return(
             <div style={{overflow: 'hidden', padding: 20, 'position':'relative'}}>
                 <DynamicTitle title="报修进度" {...this.props}/>
+                <OrderTable {...this.props} />
             </div>
         )
     }

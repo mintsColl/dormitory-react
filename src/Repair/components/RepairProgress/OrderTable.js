@@ -66,9 +66,7 @@ export default class OrderTable extends Component{
         key: 'operation',
         render: (text, record, indx) => (
             <div>
-                <a><Icon name = 'edit' onClick = {this.edit.bind(this, record)}></Icon></a>
-                <Divider type = 'vertical'/>
-                <a><Icon name = 'trash'></Icon></a>
+                <a>查看进度</a>
             </div>
         )
     }]

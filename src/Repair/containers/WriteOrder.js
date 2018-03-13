@@ -5,35 +5,40 @@ import {DynamicTitle} from '../../_platform/layout/DynamicTitle'
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux'
 import {actions as platformActions} from '../../_platform/store/global';
-import {Table, Col, Row} from 'antd'
+import {actions} from '../store/WriteOrder'
+import {Table, Col, Row, Button, Tabs} from 'antd'
+import {OrderTable, SendOrder} from '../components/WriteOrder'
+import './Tab.less'
+const TabPane = Tabs.TabPane
 @connect(
     state => {
-        return {...state}
+        const {repair:{writeOrder = {}}} = state;
+        return {...writeOrder}
     },
     dispatch => ({
-        actions: bindActionCreators({...platformActions}, dispatch)
+        actions: bindActionCreators({...platformActions, ...actions}, dispatch)
     })
 )
 export class WriteOrder extends Component{
     render(){
+        const {showOrder = {show:false}} = this.props;
         return (
             <div style={{overflow: 'hidden', padding: 20, 'position':'relative'}}>
-                <DynamicTitle title="填写报修单" {...this.props}/>
-                <Table
-
-                 />
+                <DynamicTitle title="报修单管理" {...this.props}/>
+                <Button className='sendNews' type="primary" onClick={() => {
+                    const {actions:{setWriteShow}} = this.props
+                    setWriteShow({
+                        show:true,
+                        type:'add'
+                    })
+                }}>维修单填写</Button>
+				<Tabs>
+					<TabPane tab="报修单列表" key="1">
+						<OrderTable {...this.props}/>
+					</TabPane>
+				</Tabs>
+                {showOrder.show && <SendOrder {...this.props}/>}
             </div>
         )
     }
-    columns = [{
-        title: '报修单编号',
-        dataIndex: 'repairNo',
-        key: 'repairNo'
-    },{
-        title: '报修内容',
-        dataIndex: 'repairContent',
-        key: 'repairContent'
-    },{
-        title: ''
-    }]
 }
