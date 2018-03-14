@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {Table, Modal, Notification, Divider} from 'antd';
+import {Table, Modal, Notification, Divider, Tabs} from 'antd';
 import {Icon} from 'react-fa'
+const TabPane = Tabs.TabPane
 export default class OrderTable extends Component{
     constructor(props){
         super(props)
@@ -10,12 +11,24 @@ export default class OrderTable extends Component{
     }
     render(){
         return(
-            <Table
-                bordered
-                columns = {this.columns}
-                dataSource = {this.state.dataSource}
-                rowKey = 'code'
-            />
+            <Tabs defaultActiveKey="1">
+                <TabPane tab="待评价" key="1">
+                    <Table
+                        bordered
+                        columns = {this.columns}
+                        dataSource = {this.state.dataSource}
+                        rowKey = 'code'
+                    />
+                </TabPane>
+                <TabPane tab="已评价" key="2">
+                    <Table
+                        bordered
+                        columns = {this.columns}
+                        dataSource = {this.state.dataSource}
+                        rowKey = 'code'
+                    />
+                </TabPane>
+              </Tabs>
         )
     }
     componentDidMount(){
@@ -29,9 +42,9 @@ export default class OrderTable extends Component{
         }]
         this.setState({dataSource})
     }
-    showProgress(){
-        const {actions: {setProgressShow}} = this.props;
-        setProgressShow(true)
+    showEvalute(){
+        const {actions: {setShowEvalute}} = this.props;
+        setShowEvalute(true)
     }
     columns = [{
         title: '报修单编号',
@@ -64,7 +77,7 @@ export default class OrderTable extends Component{
         title: '操作',
         key: 'operation',
         render: (text, record, indx) => (
-            <a onClick = {this.showProgress.bind(this)}>查看进度</a>
+            <a onClick = {this.showEvalute.bind(this)}>查看评价</a>
         )
     }]
 }

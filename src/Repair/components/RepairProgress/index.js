@@ -1,2 +1,3 @@
 import OrderTable from './OrderTable'
-export {OrderTable}
+import ModalProgress from './ModalProgress'
+export {OrderTable, ModalProgress}

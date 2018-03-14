@@ -28,26 +28,12 @@ export default class Repair extends Component{
             );
 	}
     static menus = [{
-        key: 'fix',
-        id: 'fix',
-        name: '报修管理',
+        key: 'WriteOrder',
+        id: 'WriteOrder',
+        name: '报修单管理',
         exact: true,
-        icon: <Icon name="calendar-check-o"/>,
-        children: [{
-            key: 'WriteOrder',
-            id: 'WriteOrder',
-            name: '报修单管理',
-            path: '/repair',
-            icon: <Icon name="pencil" />,
-            exact: true
-        },{
-            key: 'RepairProgress',
-            id: 'RepairProgress',
-            name: '报修进度',
-            path: '/repair/progress',
-            icon: <Icon name="level-up" />,
-            exact: true
-        }]
+        path: '/repair',
+        icon: <Icon name="calendar-check-o"/>
     },{
         key: 'repair',
         id: 'repair',
@@ -55,10 +41,10 @@ export default class Repair extends Component{
         exact: true,
         icon: <Icon name="calendar-check-o"/>,
         children: [{
-            key: 'RepairSchedule',
-            id: 'RepairSchedule',
+            key: 'RepairProgress',
+            id: 'RepairProgress',
             name: '维修进度',
-            path: '/repair/schedule',
+            path: '/repair/progress',
             icon: <Icon name="level-up" />,
             exact: true
         },{
@@ -77,5 +63,5 @@ export default class Repair extends Component{
             exact: true
         }]
     }]
-    static defaultOpenKeys = ['repair', 'fix']
+    static defaultOpenKeys = ['repair']
 }

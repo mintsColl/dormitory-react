@@ -37,7 +37,7 @@ export default class Header extends Component {
 				</Menu>
 				<div className="head-right">
 					<div className="head-info">
-						<a className="user">admin</a>
+						<a className="user">李明阳</a>
 						<Icon name="sign-out" title="退出登录" onClick={this.signOut.bind(this)}/>
 					</div>
 					{/* <div className="head-fn">

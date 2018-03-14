@@ -31,7 +31,7 @@ export class WriteOrder extends Component{
                         show:true,
                         type:'add'
                     })
-                }}>维修单填写</Button>
+                }}>报修单填写</Button>
 				<Tabs>
 					<TabPane tab="报修单列表" key="1">
 						<OrderTable {...this.props}/>

@@ -5,13 +5,15 @@ import {DynamicTitle} from '../../_platform/layout/DynamicTitle'
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux'
 import {actions as platformActions} from '../../_platform/store/global';
-import {OrderTable} from '../components/RepairProgress'
+import {actions} from '../store/RepairProgress'
+import {OrderTable, ModalProgress} from '../components/RepairProgress'
 @connect(
     state => {
-        return {...state}
+        const {repair: {repairProgress}} = state
+        return {...repairProgress}
     },
     dispatch => ({
-        actions: bindActionCreators({...platformActions}, dispatch)
+        actions: bindActionCreators({...platformActions, ...actions}, dispatch)
     })
 )
 export class RepairProgress extends Component{
@@ -20,6 +22,7 @@ export class RepairProgress extends Component{
             <div style={{overflow: 'hidden', padding: 20, 'position':'relative'}}>
                 <DynamicTitle title="报修进度" {...this.props}/>
                 <OrderTable {...this.props} />
+                <ModalProgress {...this.props}/>
             </div>
         )
     }
