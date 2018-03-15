@@ -15,7 +15,7 @@ export default class OrderTable extends Component{
                 <TabPane tab="待评价" key="1">
                     <Table
                         bordered
-                        columns = {this.columns}
+                        columns = {this.columns1}
                         dataSource = {this.state.dataSource}
                         rowKey = 'code'
                     />
@@ -23,7 +23,7 @@ export default class OrderTable extends Component{
                 <TabPane tab="已评价" key="2">
                     <Table
                         bordered
-                        columns = {this.columns}
+                        columns = {this.columns2}
                         dataSource = {this.state.dataSource}
                         rowKey = 'code'
                     />
@@ -42,11 +42,57 @@ export default class OrderTable extends Component{
         }]
         this.setState({dataSource})
     }
+    // 查看
     showEvalute(){
         const {actions: {setShowEvalute}} = this.props;
-        setShowEvalute(true)
+        setShowEvalute({
+            show: true,
+            disabled: true
+        })
     }
-    columns = [{
+    // 写评价
+    writeEvalute(){
+        const {actions: {setShowEvalute}} = this.props;
+        setShowEvalute({
+            show: true,
+            disabled: false
+        })
+    }
+    columns1 = [{
+        title: '报修单编号',
+        dataIndex: 'code',
+        key: 'code',
+        width: '10%'
+    },{
+        title: '报修内容',
+        dataIndex: 'content',
+        key: 'content',
+        width: '35%'
+    },{
+        title: '报修人',
+        dataIndex: 'person',
+        key: 'person'
+    },{
+        title: '地点',
+        dataIndex: 'place',
+        key: 'place'
+    },{
+        title: '联系方式',
+        dataIndex: 'tel',
+        key: 'tel'
+    },{
+        title: '备注',
+        dataIndex: 'remark',
+        key: 'remark',
+        width: '15%'
+    },{
+        title: '操作',
+        key: 'operation',
+        render: (text, record, indx) => (
+            <a onClick = {this.writeEvalute.bind(this)}>评价</a>
+        )
+    }]
+    columns2 = [{
         title: '报修单编号',
         dataIndex: 'code',
         key: 'code',

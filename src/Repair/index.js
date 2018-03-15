@@ -41,6 +41,13 @@ export default class Repair extends Component{
         exact: true,
         icon: <Icon name="calendar-check-o"/>,
         children: [{
+            key: 'RepairDetail',
+            id: 'RepairDetail',
+            name: '维修查看',
+            path: '/repair/detail',
+            icon: <Icon name="tasks" />,
+            exact: true
+        },{
             key: 'RepairProgress',
             id: 'RepairProgress',
             name: '维修进度',
@@ -53,13 +60,6 @@ export default class Repair extends Component{
             name: '维修评价',
             path: '/repair/evalute',
             icon: <Icon name="pencil-square" />,
-            exact: true
-        },{
-            key: 'RepairDetail',
-            id: 'RepairDetail',
-            name: '维修查看',
-            path: '/repair/detail',
-            icon: <Icon name="tasks" />,
             exact: true
         }]
     }]

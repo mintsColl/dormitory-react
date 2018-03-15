@@ -5,12 +5,15 @@ import {DynamicTitle} from '../../_platform/layout/DynamicTitle'
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux'
 import {actions as platformActions} from '../../_platform/store/global';
+import {actions} from '../store/AcceptOrder'
+import {OrderTable, AcceptOrder} from '../components/RepairDetail'
 @connect(
     state => {
-        return {...state}
+        const {repair: {acceptOrder = {}}} = state
+        return {...acceptOrder}
     },
     dispatch => ({
-        actions: bindActionCreators({...platformActions}, dispatch)
+        actions: bindActionCreators({...platformActions, ...actions}, dispatch)
     })
 )
 export class RepairDetail extends Component{
@@ -18,6 +21,8 @@ export class RepairDetail extends Component{
         return (
             <div style={{overflow: 'hidden', padding: 20, 'position':'relative'}}>
                 <DynamicTitle title="维修查看" {...this.props}/>
+                <OrderTable {...this.props} />
+                <AcceptOrder {...this.props} />
             </div>
         )
     }
