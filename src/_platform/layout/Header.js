@@ -131,8 +131,8 @@ export default class Header extends Component {
 	},{
 		key: 'setup',
 		id: 'SETUP',
-		title: '系统管理',
-		path: '/setup',
+		title: '系统配置',
+		path: '/system',
 		icon: <Icon name="gear"/>
 	}]
 }

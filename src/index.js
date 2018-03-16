@@ -12,4 +12,4 @@ ReactDOM.render(
         <App />
     </LocaleProvider>,
     document.getElementById('root'));
-registerServiceWorker();
+    registerServiceWorker();

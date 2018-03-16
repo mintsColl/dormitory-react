@@ -13,6 +13,7 @@ import Home from './Home/containers/Home'
 import DynamicTabs from './_platform/layout/DynamicTabs'
 import Overall from './Overall'
 import Repair from './Repair'
+import System from './System'
 class App extends Component {
     render() {
         return (
@@ -25,6 +26,7 @@ class App extends Component {
                         {Home && <Route path="/home" component={Home} />}
                         {Overall && <Route path="/overall" component={Overall} />}
                         {Repair && <Route path="/repair" component={Repair} />}
+                        {System && <Route path="/system" component={System} />}
                     </div>
                 </BrowserRouter>
             </Provider>
