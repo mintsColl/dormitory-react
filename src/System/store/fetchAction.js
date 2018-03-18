@@ -18,6 +18,7 @@ export default (url, [successAction, failAction], method = 'GET', defaultParams 
 		return dispatch => {
 			const params = {
 				headers: headers,
+                mode: 'cors',
 				method,
 			};
 
@@ -76,7 +77,7 @@ export const createFetchActionWithHeaders = (url, [successAction, failAction], m
 		return dispatch => {
 			const params = {
 				headers: headers,
-				mode:'no-cors',
+				// mode:'cors',
 				method,
 			};
 

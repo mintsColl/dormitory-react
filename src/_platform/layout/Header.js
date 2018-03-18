@@ -100,12 +100,6 @@ export default class Header extends Component {
 		path: '/design',
 		icon: <Icon name="bed"/>,
 	}, {
-		key: 'quality',
-		id: 'QUALITY',
-		title: '宿管信息管理',
-		path: '/quality',
-		icon: <Icon name="users"/>
-	}, {
 		key: 'schedule',
 		id: 'SCHEDULE',
 		title: '费用管理',

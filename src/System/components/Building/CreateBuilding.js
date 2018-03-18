@@ -1,20 +1,51 @@
 import React, {Component} from 'react';
-import {Modal, Table, Form, Col, Row, Input, Select, Divider} from 'antd';
+import {Modal, Table, Form, Col, Row, Input, Select, Divider, Notification} from 'antd';
 import {Icon} from 'react-fa'
 const FormItem = Form.Item;
 const {Option} = Select;
-class CreateDormitory extends Component{
+class CreateBuilding extends Component{
     constructor(props){
         super(props);
         this.state = {
             options: []
         }
     }
-    ok(){
-        const {actions: {setCreateShow}} = this.props;
-        setCreateShow({
-            show: false,
-            type: 'add'
+    async ok(){
+        const {
+            actions: {setCreateShow, postBuilding, is_fresh},
+            form:{validateFields, setFieldsValue}
+        } = this.props;
+        validateFields( async (err, values) => {
+            if (!err) {
+                let data = {
+                    buil_no: values["buil_no"],
+                    buil_name: values["buil_name"],
+                    buil_admin: values["buil_admin"],
+                    buil_desc: values["buil_desc"]
+                }
+                let rst = await postBuilding({},data);
+                let rst_new = JSON.parse(rst)
+                if (rst_new[0].status === "ok") {
+                    Notification.success({
+                        message: '创建成功'
+                    })
+                    setCreateShow({
+                        show: false,
+                        type: 'add'
+                    })
+                    setFieldsValue({
+                        buil_no: '',
+                        buil_name: '',
+                        buil_admin: '',
+                        buil_desc: ''
+                    })
+                    is_fresh(true)
+                }else{
+                    Notification.warning({
+                        message: '创建失败'
+                    })
+                }
+            }
         })
     }
     cancel(){
@@ -50,7 +81,7 @@ class CreateDormitory extends Component{
                     <Row>
                         <Col span = {16} offset = {3}>
                             <FormItem {...formItemLayout} label = '宿舍楼编号'>
-                                {getFieldDecorator('doe_no',{
+                                {getFieldDecorator('buil_no',{
                                     rules: [{required: true, message: '请输入宿舍楼编号'}],
                                     initialValue: ''
                                 })(
@@ -62,7 +93,7 @@ class CreateDormitory extends Component{
                     <Row>
                         <Col span={16} offset={3}>
                             <FormItem {...formItemLayout} label = '宿舍楼名称'>
-                                {getFieldDecorator('dor_name', {
+                                {getFieldDecorator('buil_name', {
                                     rules: [{required: true, message: '请输入宿舍楼名称'}]
                                 })(
                                     <Input type='text' placeholder='请输入宿舍楼名称' />
@@ -73,7 +104,7 @@ class CreateDormitory extends Component{
                     <Row>
                         <Col span = {16} offset={3}>
                             <FormItem {...formItemLayout} label='宿管名称'>
-                                {getFieldDecorator('dor_admin',{
+                                {getFieldDecorator('buil_admin',{
                                     rules: [{required: true, message: '请分配宿管人员'}]
                                 })(
                                     <Select placeholder = '请分配宿管'>
@@ -86,7 +117,7 @@ class CreateDormitory extends Component{
                     <Row>
                         <Col span={16} offset={3}>
                             <FormItem {...formItemLayout} label='描述'>
-                                {getFieldDecorator('desc',{
+                                {getFieldDecorator('buil_desc',{
                                     rules: [{required: false, message: '请输入描述信息'}]
                                 })(
                                     <Input type='text' placeholder = '请输入描述'/>
@@ -99,4 +130,4 @@ class CreateDormitory extends Component{
         )
     }
 }
-export default Form.create()(CreateDormitory)
+export default Form.create()(CreateBuilding)

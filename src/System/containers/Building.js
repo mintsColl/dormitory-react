@@ -5,7 +5,7 @@ import {actions as platformActions} from '../../_platform/store/global';
 import {DynamicTitle} from '../../_platform/layout/DynamicTitle';
 import {Sidebar} from '../../_platform/layout/SideBar'
 import {actions} from '../store/CreateDormitory'
-import {SubTree, CreateDormitory} from '../components/Dormitory'
+import {SubTree, CreateBuilding, BuildingDetail, EditBuilding} from '../components/Building'
 @connect(
     state => {
         const {system: {createDormitory = {}}} = state;
@@ -15,15 +15,18 @@ import {SubTree, CreateDormitory} from '../components/Dormitory'
         actions: bindActionCreators({...platformActions, ...actions}, dispatch)
     })
 )
-export default class Dormitory extends Component{
+export default class Building extends Component{
     render(){
+        const {dorState} = this.props;
         return (
             <div style={{overflow: 'hidden', 'position':'relative'}}>
                 <DynamicTitle title="宿舍信息" {...this.props}/>
                 <Sidebar>
                     <SubTree {...this.props} />
                 </Sidebar>
-                <CreateDormitory {...this.props} />
+                <CreateBuilding {...this.props} />
+                <BuildingDetail {...this.props} />
+                <EditBuilding {...this.props} />
             </div>
         )
     }
