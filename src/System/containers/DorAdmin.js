@@ -6,7 +6,7 @@ import {actions as platformActions} from '../../_platform/store/global';
 import {DynamicTitle} from '../../_platform/layout/DynamicTitle';
 import {Sidebar} from '../../_platform/layout/SideBar';
 import {actions} from '../store/DorAdmin'
-import {TableAdmin, CreateAdmin, CreateAdminBatch, DeleteAdminBatch} from '../components/DorAdmin';
+import {TableAdmin, CreateAdmin, CreateAdminBatch, DeleteAdminBatch, EditAdmin} from '../components/DorAdmin';
 @connect(
     state => {
         const {system: {dorAdmin = {}}} = state;
@@ -25,6 +25,7 @@ export default class DorAdmin extends Component{
                 <CreateAdmin {...this.props} />
                 <CreateAdminBatch {...this.props} />
                 <DeleteAdminBatch {...this.props} />
+                <EditAdmin {...this.props} />
             </div>
         )
     }

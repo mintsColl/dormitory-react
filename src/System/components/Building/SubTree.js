@@ -87,12 +87,9 @@ export default class SubTree extends Component{
                     <Row>
                         <Col span={24}>
                             <div style={{borderBottom: 'solid 1px #999', paddingBottom: 5, marginBottom: 5}}>
-                                {this.state.type === 'building' ?
-                                <Button onClick={this.addBuilding.bind(this)}>新建宿舍楼</Button> :
-                                <Button onClick={this.addDomitory.bind(this)}>新建宿舍号</Button>
-                            }
-                        </div>
-                    </Col>
+                                <Button onClick={this.addBuilding.bind(this)}>新建宿舍楼</Button>
+                            </div>
+                        </Col>
                     {
                         this.state.search && <Col>
                             <Search

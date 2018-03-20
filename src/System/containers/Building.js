@@ -20,7 +20,7 @@ export default class Building extends Component{
         const {dorState} = this.props;
         return (
             <div style={{overflow: 'hidden', 'position':'relative'}}>
-                <DynamicTitle title="宿舍信息" {...this.props}/>
+                <DynamicTitle title="宿舍楼信息" {...this.props}/>
                 <Sidebar>
                     <SubTree {...this.props} />
                 </Sidebar>

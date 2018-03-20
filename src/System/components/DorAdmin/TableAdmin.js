@@ -87,6 +87,13 @@ export default class TableAdmin extends Component{
             </Spin>
         )
     }
+    edit(record){
+        const {actions: {saveEditData, showEditModal}} = this.props;
+        let data = JSON.stringify(record);
+        let new_data = JSON.parse(data);
+        saveEditData([new_data]);
+        showEditModal(true);
+    }
     columns = [{
         title: '序号',
         key: 'index',
@@ -117,7 +124,7 @@ export default class TableAdmin extends Component{
         render: (text, record, index) => {
             return (
                 <div>
-                    <a><Icon name='edit' /></a>
+                    <a onClick = {this.edit.bind(this, record)}><Icon name='edit' /></a>
                     <Divider type='vertical' />
                     <Popconfirm title="确认删除吗" onConfirm = {this.confirm.bind(this, record)} okText="是" cancelText = "否">
                         <a><Icon name='trash' /></a>

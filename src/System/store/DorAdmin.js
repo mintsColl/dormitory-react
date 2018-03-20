@@ -10,6 +10,9 @@ const showCreateBatch = createAction(`${ID}是否显示批量创建人员的弹�
 const showDeleteBatch = createAction(`${ID}是否显示批量删除人员的弹框`);
 const deleteDorAdminAc = createFetchAction(`${SERVICE_API}/doradmin/deleteDorAdmin.php?doradmin_no={{doradmin_no}}`, [], "GET");
 const saveDeleteData = createAction(`${ID}保存要删除的数据`);
+const saveEditData = createAction(`${ID}保存要变更的数据`);
+const showEditModal = createAction(`${ID}是否显示变更框`);
+const editDataAc = createFetchAction(`${SERVICE_API}/doradmin/editDorAdmin.php?doradmin_no={{doradmin_no}}`, [], "POST");
 export const actions = {
     showCreateModal,
     postDorAdminAc,
@@ -18,7 +21,10 @@ export const actions = {
     deleteDorAdminAc,
     showCreateBatch,
     showDeleteBatch,
-    saveDeleteData
+    saveDeleteData,
+    saveEditData,
+    showEditModal,
+    editDataAc
 }
 export default handleActions({
     [showCreateModal]: (state, {payload}) => ({
@@ -40,5 +46,13 @@ export default handleActions({
     [saveDeleteData]: (state, {payload}) => ({
         ...state,
         deleteData: payload
+    }),
+    [saveEditData]: (state, {payload}) => ({
+        ...state,
+        editData: payload
+    }),
+    [showEditModal]: (state, {payload}) => ({
+        ...state,
+        editShow: payload
     })
 },{})

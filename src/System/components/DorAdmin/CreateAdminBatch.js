@@ -27,7 +27,8 @@ export default class CreateAdminBatch extends Component{
         })
     }
     cancel(){
-
+        const {actions: {showCreateBatch}} = this.props;
+        showCreateBatch(false);
     }
     // 下载文件
     download(){
@@ -79,7 +80,7 @@ export default class CreateAdminBatch extends Component{
                 onOk = {this.ok.bind(this)}
                 onCancel = {this.cancel.bind(this)}
             >
-                <h1>申请录入</h1>
+                <h1>宿管信息批量录入</h1>
                 <Table
                     bordered
                     columns = {this.columns}
