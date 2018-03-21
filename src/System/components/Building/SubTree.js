@@ -45,10 +45,16 @@ export default class SubTree extends Component{
         const {actions: {getBuilding, saveNode}} = this.props;
         // 获取宿舍楼树
         let rst = await getBuilding();
-        this.setState({spin: false, buildTree: rst})
-        saveNode([rst[0]]);
+        if (rst) {
+            this.setState({spin: false, buildTree: rst})
+            saveNode([rst[0]]);
+        }
+        this.setState({spin: false});
     }
     loop(data){
+        if (data.length === 0) {
+            return;
+        }
         return data.map((item, index) => {
             if (item.children && item.children.length > 0) {
                 return <TreeNode

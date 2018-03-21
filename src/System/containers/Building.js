@@ -16,6 +16,10 @@ import {SubTree, CreateBuilding, BuildingDetail, EditBuilding} from '../componen
     })
 )
 export default class Building extends Component{
+    async componentDidMount(){
+        const {actions: {getDorAdminAc}} = this.props;
+        let rst = await getDorAdminAc()
+    }
     render(){
         const {dorState} = this.props;
         return (

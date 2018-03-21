@@ -14,6 +14,8 @@ const deleteBuilding = createFetchAction(`${SERVICE_API}/building/deleteDormitor
 const editBuilding = createFetchAction(`${SERVICE_API}/building/editDormitory.php/?buil_no={{buil_no}}`, [], 'POST');
 const saveEditData = createAction(`${ID}保存要编辑的数据`);
 const showEditModal = createAction(`${ID}是否显示编辑弹框`);
+const saveDorMadin = createAction(`${ID}保存宿管信息`);
+const getDorAdminAc = createFetchAction(`${SERVICE_API}/doradmin/getDorAdmin.php`, [saveDorMadin], "GET");
 export const actions = {
     setCreateShow,
     setCreateDormShow,
@@ -25,7 +27,9 @@ export const actions = {
     deleteBuilding,
     editBuilding,
     saveEditData,
-    showEditModal
+    showEditModal,
+    getDorAdminAc,
+    saveDorMadin
 }
 export default handleActions({
     [setCreateShow]: (state, {payload}) => ({
@@ -59,5 +63,9 @@ export default handleActions({
     [showEditModal]: (state, {payload}) => ({
         ...state,
         editModal: payload
+    }),
+    [saveDorMadin]: (state, {payload}) => ({
+        ...state,
+        dorAdmin: payload
     })
 },{})

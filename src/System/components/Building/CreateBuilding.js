@@ -7,7 +7,8 @@ class CreateBuilding extends Component{
     constructor(props){
         super(props);
         this.state = {
-            options: []
+            options: [],
+            dorAdmin: []
         }
     }
     async ok(){
@@ -23,8 +24,7 @@ class CreateBuilding extends Component{
                     buil_admin: values["buil_admin"],
                     buil_desc: values["buil_desc"]
                 }
-                let rst = await postBuilding({},data);
-                let rst_new = JSON.parse(rst)
+                let rst_new = await postBuilding({},data);
                 if (rst_new[0].status === "ok") {
                     Notification.success({
                         message: '创建成功'
@@ -55,10 +55,13 @@ class CreateBuilding extends Component{
             type: 'add'
         })
     }
-    data = ['张三', '李四', '王五']
+    componentWillReceiveProps(nextProps){
+        const {dorAdmin = []} = nextProps;
+        this.setState({dorAdmin});
+    }
     loop(data){
         let options = data.map((item, index) => {
-            return <Option value={item}>{item}</Option>
+            return <Option value={item.doradmin_name}>{item.doradmin_name}</Option>
         })
         return options;
     }
@@ -108,7 +111,7 @@ class CreateBuilding extends Component{
                                     rules: [{required: true, message: '请分配宿管人员'}]
                                 })(
                                     <Select placeholder = '请分配宿管'>
-                                        {this.loop(this.data)}
+                                        {this.loop(this.state.dorAdmin)}
                                     </Select>
                                 )}
                             </FormItem>

@@ -97,7 +97,7 @@ export default class Header extends Component {
 		key: 'design',
 		id: 'DESIGN',
 		title: '学生住宿管理',
-		path: '/design',
+		path: '/accomm',
 		icon: <Icon name="bed"/>,
 	}, {
 		key: 'schedule',
