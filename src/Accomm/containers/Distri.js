@@ -23,7 +23,8 @@ export default class Dirsti extends Component{
         super(props);
         this.state = {
             options_data: [],
-            type: ''
+            type: '',
+            originData: []
         }
     }
     componentWillReceiveProps(nextProps){
@@ -38,6 +39,7 @@ export default class Dirsti extends Component{
     async componentDidMount(){
         const {actions: {getStudent}} = this.props;
         let rst = await getStudent();
+        this.setState({originData: rst});
         let stu_depart = [], obj = {}, obj2 = {};
         for (var i = 0; i < rst.length; i++) {
             let depart = rst[i].stu_depart;

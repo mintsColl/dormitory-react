@@ -1,32 +1,43 @@
 import React, {Component} from 'react';
-import {Table, Divider, Popconfirm, Spin} from 'antd';
+import {Table, Divider, Popconfirm, Spin, Icon as Icon2, Notification} from 'antd';
 import {Icon} from 'react-fa';
 export default class DistriDetail extends Component{
     constructor(props){
         super(props);
         this.state = {
-            spin: false,
+            spinStatus: true,
             dataSource: []
         }
     }
     async componentWillReceiveProps(nextProps){
-        this.setState({spin: true});
-        const {actions: {getDistri}, selectNode = []} = nextProps;
-        let dor_no = selectNode[0].split('--')[1];
-        let rst = await getDistri({dor_no});
-        this.setState({spin: false});
-        this.setState({dataSource: rst});
+        const {distriData = [], spinStatus = true, fresh = {fre: false, dor_no: ''}, actions: {is_fresh}} = nextProps;
+        if (fresh.fre) {
+            this.getData(fresh.dor_no)
+            is_fresh({
+                fre:false
+            })
+        }
+        this.setState({spinStatus: spinStatus, dataSource: distriData});
     }
-    edit(){
-
+    edit(record){
+        const {actions: {showDistriDor, saveEditData}} = this.props;
+        showDistriDor({show: true, type: 'edit'});
+        saveEditData(record);
+    }
+    async getData(dor_no){
+        const {actions: {getDistri}} = this.props;
+        this.setState({spinStatus: true});
+        let rst = await getDistri({dor_no});
+        this.setState({spinStatus: false, dataSource: rst});
     }
     async confirm(record){
-        const {acions: {deleteDistri}} = this.props;
-        let rst = await deleteDistri({dor_no:record.dor_no});
+        const {actions: {deleteDistri}} = this.props;
+        let rst = await deleteDistri({stu_no:record.stu_no});
         if(rst[0].status === 'ok'){
             Notification.success({
                 message: '删除成功'
             })
+            this.getData(record.dor_no);
         }else{
             Notification.warning({
                 message: '删除失败'
@@ -34,13 +45,15 @@ export default class DistriDetail extends Component{
         }
     }
     render(){
+        const antIcon = <Icon2 type="loading" style={{ fontSize: 24 }} spin />
         return (
             <div style = {{"padding": '0 10px 0 165px'}}>
-                <Spin spinning = {this.state.spin}>
+                <Spin indicator={antIcon} spinning = {this.state.spinStatus}>
                     <Table
                         columns = {this.columns}
                         bordered
                         dataSource = {this.state.dataSource}
+                        rowKey = "stu_no"
                     />
                 </Spin>
             </div>
@@ -62,6 +75,7 @@ export default class DistriDetail extends Component{
         key: 'stu_no'
     },{
         title: '操作',
+        key: 'option',
         render: (text, record, index) => {
             return (
                 <div>

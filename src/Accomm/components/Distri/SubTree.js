@@ -14,7 +14,7 @@ export default class SubTree extends Component{
     }
     distriDormitory(){
         const {selectNode = [], actions: {showDistriDor}} = this.props;
-        showDistriDor(true)
+        showDistriDor({show: true, type: 'add'})
     }
     componentWillReceiveProps(nextProps){
         const {actions: {is_fresh}, fresh} = nextProps;
@@ -53,11 +53,11 @@ export default class SubTree extends Component{
                 />
             })
     }
-    select(node){
+    async select(node){
         if (node.length===0) {
             return;
         }
-        const {actions: {saveBuilding, saveDormitory}} = this.props;
+        const {actions: {saveBuilding, saveDormitory, getDistri, saveDistriData, saveSpinStatus}} = this.props;
         // 保存当前点击的节点
         saveBuilding(node);
         let data = node[0].split('--');
@@ -69,8 +69,14 @@ export default class SubTree extends Component{
                 dor_desc: data[2],
                 dor_type: data[4]
             }]
-            saveDormitory(node1)
+            saveDormitory(node1);
+            let dor_no = data[1];
+            saveSpinStatus(true)
+            let rst = await getDistri({dor_no});
+            saveSpinStatus(false)
+            saveDistriData(rst);
         }
+
     }
     onLoadData = async (treeNode) => {
         let buil_no = treeNode.props.eventKey.split('--')[0];

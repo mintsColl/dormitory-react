@@ -15,6 +15,8 @@ import Overall from './Overall';
 import Repair from './Repair';
 import System from './System';
 import Accomm from './Accomm';
+import Message from './Message';
+import Access from './Access';
 class App extends Component {
     render() {
         return (
@@ -29,6 +31,8 @@ class App extends Component {
                         {Repair && <Route path="/repair" component={Repair} />}
                         {System && <Route path="/system" component={System} />}
                         {Accomm && <Route path="/accomm" component={Accomm} />}
+                        {Message && <Route path="/message" component={Message} />}
+                        {Access && <Route path="/access" component={Access} />}
                     </div>
                 </BrowserRouter>
             </Provider>

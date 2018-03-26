@@ -7,6 +7,7 @@ const saveBuilding = createAction(`${ID}保存当前点击的节点`);
 const showDistriDor = createAction(`${ID}是否显示创建宿舍的弹框`);
 const is_fresh = createAction(`${ID}是否刷新创建宿舍的界面`);
 const postDistri = createFetchAction(`${SERVICE_API}/distri/insertDistri.php`, [], "POST");
+const putDistri = createFetchAction(`${SERVICE_API}/distri/putDistri.php`, [], "POST");
 const getDormitoryAc = createFetchAction(`${SERVICE_API}/dormitory/getDormitory.php/?buil_no={{buil_no}}`, [], 'GET');
 const saveDormitory = createAction(`${ID}保存当前点击的节点1`);
 const deleteDormitory = createFetchAction(`${SERVICE_API}/dormitory/deleteDormitory.php/?dor_no={{dor_no}}`, [], "GET");
@@ -15,7 +16,9 @@ const showEditModal = createAction(`${ID}是否显示编辑弹框`);
 const editModalAc = createFetchAction(`${SERVICE_API}/dormitory/editDormitory.php/`, [], 'POST');
 const getStudent = createFetchAction(`${SERVICE_API}/distri/getStudent.php/`, [], "GET");
 const getDistri = createFetchAction(`${SERVICE_API}/distri/getDistri.php/?dor_no={{dor_no}}`, [], "GET");
-const deleteDistri = createFetchAction(`${SERVICE_API}/distri/deleteDistri.php/?dor_no={{dor_no}}`, [], "GET");
+const deleteDistri = createFetchAction(`${SERVICE_API}/distri/deleteDistri.php/?stu_no={{stu_no}}`, [], "GET");
+const saveDistriData = createAction(`${ID}保存某个宿舍的入住详情`);
+const saveSpinStatus = createAction(`${ID}保存spin框的状态`);
 export const actions = {
     getBuilding,
     saveBuilding,
@@ -30,7 +33,10 @@ export const actions = {
     editModalAc,
     getStudent,
     getDistri,
-    deleteDistri
+    deleteDistri,
+    saveDistriData,
+    saveSpinStatus,
+    putDistri
 }
 export default handleActions({
     [saveBuilding]: (state, {payload}) => ({
@@ -56,5 +62,14 @@ export default handleActions({
     [showEditModal]: (state, {payload}) => ({
         ...state,
         editModal: payload
-    })
+    }),
+    [saveDistriData]: (state, {payload}) => ({
+        ...state,
+        distriData: payload
+    }),
+    [saveSpinStatus]: (state, {payload}) => ({
+        ...state,
+        spinStatus: payload
+    }),
+
 },{})
