@@ -1,2 +1,3 @@
 import Visit from './Visit';
-export {Visit}
+import Goods from './Goods';
+export {Visit, Goods}

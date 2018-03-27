@@ -4,7 +4,7 @@ import {Icon} from 'react-fa';
 const FormItem = Form.Item;
 class CreateVisit extends Component{
     ok(){
-        const {form: {validateFields}, actions: {postData}} = this.props;
+        const {form: {validateFields}, actions: {postData, showCreate, isFresh}} = this.props;
         validateFields(async (err, values) => {
             if (!err) {
                 let data = {
@@ -21,8 +21,10 @@ class CreateVisit extends Component{
                     Notification.success({
                         message: '录入成功'
                     })
+                    showCreate(false);
+                    isFresh(true)
                 }else{
-                    Notification.success({
+                    Notification.warning({
                         message: '录入失败'
                     })
                 }
@@ -30,7 +32,8 @@ class CreateVisit extends Component{
         })
     }
     cancel(){
-
+        const {actions: {showCreate}} = this.props;
+        showCreate(false)
     }
     changeEntry(){
 
@@ -43,15 +46,15 @@ class CreateVisit extends Component{
             labelCol: {span: 9},
             wrapperCol: {span: 15},
         };
-        const {form: {getFieldDecorator}} = this.props;
+        const {form: {getFieldDecorator}, createVisible = false} = this.props;
         return (
             <Modal
-                visible = {true}
+                visible = {createVisible}
                 width = '35%'
                 onOk = {this.ok.bind(this)}
                 onCancel = {this.cancel.bind(this)}
             >
-                <section style = {{marginBottom: 370}}>
+                <section style = {{marginBottom: 430}}>
                     <h1 style={{textAlign: 'center'}}>新建拜访</h1>
                     <Divider><Icon name='cut' /></Divider>
                     <Form>

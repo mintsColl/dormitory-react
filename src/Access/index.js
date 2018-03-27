@@ -9,10 +9,10 @@ import {Icon} from 'react-fa';
 import {actions as platformActions} from '../_platform/store/global';
 export default class Access extends Component{
     async componentDidMount(){
-        // const {default: reducer} = await import('./store');
+        const {default: reducer} = await import('./store');
         const Containers = await import('./containers');
         // 要把注册reducer放到渲染组件之前
-        // injectReducer('message', reducer)
+        injectReducer('access', reducer)
         this.setState({...Containers});
     }
     render(){
@@ -36,8 +36,8 @@ export default class Access extends Component{
         exact: true,
         icon: <Icon name="address-card-o"/>
     },{
-        key: 'GoodsRecord',
-        id: 'GoodsRecord',
+        key: 'Goods',
+        id: 'Goods',
         path: '/access/goods',
         name: '外带物品登记',
         exact: true,

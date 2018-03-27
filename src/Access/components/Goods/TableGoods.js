@@ -25,7 +25,7 @@ export default class TableVisit extends Component{
     }
     async confirm(record){
         const {actions: {deleteData}} = this.props;
-        let rst = await deleteData({visit_name: record.visit_name});
+        let rst = await deleteData({goods_name: record.goods_name});
         if (rst[0].status === 'ok') {
             Notification.success({
                 message: '删除成功'
@@ -50,37 +50,23 @@ export default class TableVisit extends Component{
         )
     }
     columns = [{
-        title: '来访人姓名',
-        dataIndex: 'visit_name',
-        key: 'visit_name'
+        title: '姓名',
+        dataIndex: 'goods_name',
+        key: 'goods_name'
     },{
-        title: '访问人',
-        dataIndex: 'visit_person',
-        key: 'visit_person'
+        title: '宿舍号',
+        dataIndex: 'goods_dor',
+        key: 'goods_dor'
     },{
-        title: '与被访者关系',
-        dataIndex: 'visit_rela',
-        key: 'visit_rela'
+        title: '外带物品',
+        dataIndex: 'goods_desc',
+        key: 'goods_desc'
     },{
-        title: '访问活动',
-        dataIndex: 'visit_acti',
-        key: 'visit_acti'
-    },{
-        title: '访问时间',
-        // dataIndex: 'visit_entry',
-        key:'visit_entry',
+        title: '外出时间',
+        key:'goods_leave',
         render: (text, record, index) => {
             return (
-                <span>{moment(record.visit_entry).format('YYYY-MM-DD HH:mm:ss')}</span>
-            )
-        }
-    },{
-        title: '预计离开时间',
-        // dataIndex: 'visit_leave',
-        key: 'visit_leave',
-        render: (text, record, index) => {
-            return (
-                <span>{moment(record.visit_leave).format('YYYY-MM-DD HH:mm:ss')}</span>
+                <span>{moment(record.goods_leave).format('YYYY-MM-DD HH:mm:ss')}</span>
             )
         }
     },{
