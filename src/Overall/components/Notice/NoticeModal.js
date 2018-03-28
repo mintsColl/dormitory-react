@@ -1,20 +1,27 @@
 import React, {Component} from 'react';
-import {Modal, Select, Col, Row, Form, Button, Input} from 'antd';
+import {Modal, Select, Col, Row, Form, Button, Input, Notification} from 'antd';
 import E from 'wangeditor'
+import moment from 'moment';
 const {Option} = Select;
 const FormItem = Form.Item;
 let editor;
 class NoticeModal extends Component{
     constructor(props){
         super(props);
+        this.state = {
+            content: []
+        }
     }
     componentDidMount(){
         setTimeout(() => {
             const {notice_visible:{type=''},notice_data, form:{setFieldsValue}} = this.props;
             const elem = this.refs.editorElem
             editor = new E(elem)
-            editor.customConfig.onChange = (html) => {
-                this.setState({content: html})
+
+            editor.customConfig.onchange = (html) => {
+                this.setState({
+                    content: html
+                })
             }
             editor.customConfig.zIndex = 1000;
             editor.create();
@@ -28,13 +35,45 @@ class NoticeModal extends Component{
         },0)
     }
     postNotice(){
-        const {actions:{setNoticeShow}, form:{validateFields}} = this.props;
-        validateFields(async (err, value) => {
-            console.log("value:", value);
+        const {actions:{setNoticeShow, isFresh, postNotice, putNotice}, form:{validateFields}, notice_visible = {type:'', show: false}} = this.props;
+        validateFields(async (err, values) => {
+            if(!err){
+                let data = {
+                    title: values['title'],
+                    importance: values['importance'],
+                    time: moment().format("YYYY-MM-DD HH:mm:ss"),
+                    content: this.state.content
+                }
+                if (notice_visible.type === 'add') {
+                    let rst = await postNotice({}, data);
+                    if (rst[0].status === 'ok') {
+                        Notification.success({
+                            message: '发布成功'
+                        });
+                        isFresh(true)
+                        setNoticeShow({show: false})
+                    }else{
+                        Notification.warning({
+                            message: '发布失败'
+                        });
+                    }
+                }else{
+                    let rst = await putNotice({}, data);
+                    if (rst[0].status === 'ok') {
+                        Notification.success({
+                            message: '编辑成功'
+                        });
+                        isFresh(true)
+                        setNoticeShow({show: false})
+                    }else{
+                        Notification.warning({
+                            message: '编辑失败'
+                        });
+                    }
+                }
+            }
         })
-        setNoticeShow({
-            show: false
-        })
+
     }
     cancel(){
         const {actions:{setNoticeShow}} = this.props;
@@ -60,6 +99,14 @@ class NoticeModal extends Component{
                 <Form>
                     <Row>
                         <Col span={6} offset={1}>
+                            {notice_visible.type === 'edit' ? <FormItem {...formItemLayout} label = '公告标题'>
+                                {getFieldDecorator('title', {
+                                    rules: [{required: true, message: '请输入公告标题'}],
+                                    initialValue: ''
+                                })(
+                                    <Input type='text' disabled placeholder = '公告标题'/>
+                                )}
+                            </FormItem> :
                             <FormItem {...formItemLayout} label = '公告标题'>
                                 {getFieldDecorator('title', {
                                     rules: [{required: true, message: '请输入公告标题'}],
@@ -68,6 +115,7 @@ class NoticeModal extends Component{
                                     <Input type='text' placeholder = '公告标题'/>
                                 )}
                             </FormItem>
+                        }
                         </Col>
                         <Col span={6} offset={1}>
                             <FormItem {...formItemLayout} label = '重要程度'>

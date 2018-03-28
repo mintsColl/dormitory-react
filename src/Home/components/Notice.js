@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import {Table, Pagination, Card, Modal, Spin} from 'antd';
-import './News.less';
+import './Notice.less';
 import {bindActionCreators} from 'redux';
 import {actions} from '../store/home';
 import {connect} from 'react-redux';
@@ -12,26 +12,26 @@ import {connect} from 'react-redux';
         actions: bindActionCreators({...actions}, dispatch)
     })
 )
-export class News extends Component {
+export class Notice extends Component {
     constructor(props){
         super(props);
         this.state = {
             visible: false,
-            newsContent: '',
+            noticeContent: '',
             dataSource: [],
             spin: false
         }
     }
     async componentDidMount(){
-        const {actions: {getNews}} = this.props;
+        const {actions: {getNotice}} = this.props;
         this.setState({spin: true});
-        let rst = await getNews();
+        let rst = await getNotice();
         this.setState({dataSource: rst, spin: false})
     }
     render(){
         return(
             <Card
-                title = '最近新闻'
+                title = '最新公告'
             >
                 <Spin spinning = {this.state.spin}>
                     <Table
@@ -41,7 +41,7 @@ export class News extends Component {
                     />
                 </Spin>
                 <Modal
-                    title = "新闻详情"
+                    title = "公告详情"
                     visible = {this.state.visible}
                     width = "50%"
                     footer = {null}
@@ -49,25 +49,29 @@ export class News extends Component {
                         this.setState({visible: false})
                     }}
                 >
-                    <div dangerouslySetInnerHTML={{__html:this.state.newsContent}}></div>
+                    <div dangerouslySetInnerHTML={{__html:this.state.noticeContent}}></div>
                 </Modal>
             </Card>
         )
     }
     columns = [{
         title:'标题',
-        dataIndex: 'news_title',
-        key:'news_title'
+        dataIndex: 'title',
+        key:'title'
+    },{
+        title:'重要程度',
+        dataIndex: 'importance',
+        key:'importance'
     },{
         title: '发布时间',
-        dataIndex: 'news_time',
-        key: 'news_time'
+        dataIndex: 'time',
+        key: 'time'
     },{
         title: '操作',
         render: (record) => (
             <a onClick={(e) => {
                 this.setState({
-                    newsContent: record.news_content,
+                    noticeContent: record.content,
                     visible: true
                 })
             }}>查看</a>

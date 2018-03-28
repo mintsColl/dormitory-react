@@ -5,7 +5,7 @@ export default class NewsDetail extends Component{
         const {news_detail = "", news_content = "", actions:{setNewsDetail}} = this.props;
         return (
             <Modal
-                title="具体新闻"
+                title="内容详情"
                 visible = {news_detail}
                 width="50%"
                 onOk = {() => {
@@ -16,7 +16,7 @@ export default class NewsDetail extends Component{
                 }}
                 footer = {null}
             >
-                <p style={{"textIndent":'2em'}}>{news_content}</p>
+                <p style={{"textIndent":'2em'}} dangerouslySetInnerHTML={{__html:news_content}}></p>
             </Modal>
         )
     }

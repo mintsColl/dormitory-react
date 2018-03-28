@@ -1,22 +1,33 @@
 import React,{Component} from 'react';
-import {Table, Tabs, Divider} from 'antd';
+import {Table, Tabs, Divider, Spin, Popconfirm, Notification} from 'antd';
 import {Icon} from 'react-fa'
 import '../News/TableStyle.less'
 export default class NoticeTable extends Component{
     constructor(props){
         super(props);
         this.state = {
-            dataSource: []
+            dataSource: [],
+            spin: false
         }
     }
-    componentDidMount(){
-        let dataSource = this.data.map((item, index) => {
+    componentWillReceiveProps(nextProps){
+        const {actions: {isFresh}, fresh} = nextProps;
+        if (fresh) {
+            this.componentDidMount();
+            isFresh(false);
+        }
+    }
+    async componentDidMount(){
+        const {actions: {getNotice}} = this.props;
+        this.setState({spin: true});
+        let rst = await getNotice();
+        let data = rst.map((item, index) => {
             return {
-                ...item,
-                index: index + 1
+                index: index + 1,
+                ...item
             }
         })
-        this.setState({dataSource})
+        this.setState({dataSource:data, spin: false});
     }
     detail(content){
         const {actions:{setNoticeContent, setNoticeDetail}} = this.props;
@@ -28,14 +39,30 @@ export default class NoticeTable extends Component{
         setNoticeShow({show: true, type: 'edit'})
         setNoticeData(record)
     }
+    async confirm(record){
+        const {actions: {deleteNotice}} = this.props;
+        let rst = await deleteNotice({title: record.title});
+        if (rst[0].status === 'ok') {
+            Notification.success({
+                message: '删除成功'
+            })
+            this.componentDidMount();
+        }else{
+            Notification.warning({
+                message: '删除失败'
+            })
+        }
+    }
     render(){
         return(
-            <Table
-                columns={this.columns}
-                rowKey='index'
-                dataSource = {this.state.dataSource}
-                bordered
-            />
+            <Spin spinning = {this.state.spin}>
+                <Table
+                    columns={this.columns}
+                    rowKey='index'
+                    dataSource = {this.state.dataSource}
+                    bordered
+                />
+            </Spin>
         )
     }
     columns = [{
@@ -48,10 +75,9 @@ export default class NoticeTable extends Component{
         key:'title'
     },{
         title: '公告内容',
-        // dataIndex: 'content',
-        // key: 'content'
+        width: '30%',
         render: (text, record, index) => (
-            <div className="newsContent">{record.content}</div>
+            <div className="newsContent" dangerouslySetInnerHTML={{__html:record.content}}></div>
         )
     },{
         title: '重要程度',
@@ -69,34 +95,10 @@ export default class NoticeTable extends Component{
                 <Divider type="vertical"/>
                 <a><Icon onClick={this.edit.bind(this, record)} name='edit'/></a>
                 <Divider type="vertical"/>
-                <a><Icon name='trash-o'/></a>
+                <Popconfirm onConfirm = {this.confirm.bind(this, record)} okText = '是' cancelText = '否' title='确认删除吗'>
+                    <a><Icon name='trash-o'/></a>
+                </Popconfirm>
             </span>
         )
-    }]
-    data = [{
-        title: '安全通知',
-        content: '由于今日使用大功率用电器，导致宿舍停电等消息，危险',
-        importance: '高',
-        time: '2018-3-3'
-    },{
-        title: '用水通知',
-        content: '为响应国家号召，宣布停水一晚',
-        importance: '高',
-        time: '2018-3-3'
-    },{
-        title: '用电通知',
-        content: '为响应国家号召，宣布停电一晚',
-        importance: '高',
-        time: '2018-3-3'
-    },{
-        title: '用网通知',
-        content: '为响应国家号召，宣布停网一晚',
-        importance: '高',
-        time: '2018-3-3'
-    },{
-        title: '领用通知',
-        content: '为响应国家号召，宣布领取卫生工具',
-        importance: '高',
-        time: '2018-3-3'
     }]
 }

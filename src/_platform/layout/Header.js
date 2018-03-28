@@ -100,12 +100,6 @@ export default class Header extends Component {
 		path: '/accomm',
 		icon: <Icon name="bed"/>,
 	}, {
-		key: 'message',
-		title: '留言管理',
-        id: 'MESSAGE',
-		path: '/message',
-		icon: <Icon name="commenting"/>
-	}, {
 		key: 'lock',
 		title: '门禁管理',
 		id: 'LOCK',

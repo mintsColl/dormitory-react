@@ -17,7 +17,7 @@ export default class NoticeDetail extends Component{
                 }}
                 footer = {null}
             >
-                <p style={{"textIndent":'2em'}}>{notice_content}</p>
+                <p style={{"textIndent":'2em'}} dangerouslySetInnerHTML={{__html:notice_content}}></p>
             </Modal>
         )
     }
