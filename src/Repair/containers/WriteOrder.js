@@ -25,7 +25,7 @@ export class WriteOrder extends Component{
         return (
             <div style={{overflow: 'hidden', padding: 20, 'position':'relative'}}>
                 <DynamicTitle title="报修单管理" {...this.props}/>
-                <Button className='sendNews' type="primary" onClick={() => {
+                <Button className='sendRepair' type="primary" onClick={() => {
                     const {actions:{setWriteShow}} = this.props
                     setWriteShow({
                         show:true,

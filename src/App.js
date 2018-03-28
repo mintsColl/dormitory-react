@@ -17,6 +17,7 @@ import System from './System';
 import Accomm from './Accomm';
 import Message from './Message';
 import Access from './Access';
+import Tools from './Tools';
 class App extends Component {
     render() {
         return (
@@ -33,6 +34,7 @@ class App extends Component {
                         {Accomm && <Route path="/accomm" component={Accomm} />}
                         {Message && <Route path="/message" component={Message} />}
                         {Access && <Route path="/access" component={Access} />}
+                        {Tools && <Route path="/tools" component={Tools} />}
                     </div>
                 </BrowserRouter>
             </Provider>

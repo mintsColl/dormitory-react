@@ -7,35 +7,30 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux'
 import {actions as platformActions} from '../../_platform/store/global';
 import {Tabs, Button} from 'antd';
-import {TableVisit, CreateVisit} from '../components/Visit';
-import {actions} from '../store/visit';
-import './Tab.css';
-const TabPane = Tabs.TabPane;
+import './Tab.less';
+import {actions} from '../store/borrow';
+import {TableBorrow, CreateBorrow} from '../components/Borrow';
 @connect(
     state => {
-        const {access: {visit = {}}} = state;
-        return {...visit}
+        const {tools: {borrow = {}}} = state;
+        return {...borrow}
     },
     dispatch => ({
         actions: bindActionCreators({...platformActions, ...actions}, dispatch)
     })
 )
-export default class Visit extends Component{
+export default class Borrow extends Component{
     render(){
         const {createVisible = false} = this.props;
         return (
             <div style={{overflow: 'hidden', position: 'relative', padding: 20}}>
-                <DynamicTitle {...this.props} title = '来访人登记' />
-                <Button className='sendGoods' type="primary" onClick={() => {
+                <DynamicTitle {...this.props} title = '工具借用' />
+                <Button className='borrowTools' type="primary" onClick={() => {
                     const {actions: {showCreate}} = this.props;
                     showCreate(true)
-                }}>访问登记</Button>
-				<Tabs>
-					<TabPane tab="登记列表" key="1">
-						<TableVisit {...this.props}/>
-					</TabPane>
-                    {createVisible && <CreateVisit {...this.props} />}
-				</Tabs>
+                }}>借用登记</Button>
+                <TableBorrow {...this.props} />
+                {createVisible && <CreateBorrow {...this.props} />}
             </div>
         )
     }

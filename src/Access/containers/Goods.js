@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux'
 import {actions as platformActions} from '../../_platform/store/global';
 import {Tabs, Button} from 'antd';
-import './Tab.less';
+import './Tab.css';
 import {actions} from '../store/goods';
 import {CreateGoods, TableGoods} from '../components/Goods';
 const TabPane = Tabs.TabPane;
@@ -26,7 +26,7 @@ export default class Visit extends Component{
         return (
             <div style={{overflow: 'hidden', position: 'relative', padding: 20}}>
                 <DynamicTitle {...this.props} title = '外带物品登记' />
-                <Button className='sendNews' type="primary" onClick={() => {
+                <Button className='sendGoods' type="primary" onClick={() => {
                     const {actions: {showCreate}} = this.props;
                     showCreate(true)
                 }}>外出登记</Button>

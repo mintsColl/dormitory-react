@@ -31,7 +31,7 @@ export default class News extends Component{
         return (
             <div style={{overflow: 'hidden', padding: 20, 'position':'relative'}}>
 				<DynamicTitle title="新闻管理" {...this.props}/>
-                <Button className='sendNews' type="primary" onClick={() => {
+                <Button className='postNews' type="primary" onClick={() => {
                     const {actions:{setNewsShow}} = this.props
                     setNewsShow({
                         show:true,

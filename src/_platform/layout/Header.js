@@ -115,7 +115,7 @@ export default class Header extends Component {
 		key: 'video',
 		title: '工具管理',
 		id: 'VIDEO',
-		path: '/video',
+		path: '/tools',
 		icon: <Icon name="gavel"/>
 	},{
 		key: 'setup',

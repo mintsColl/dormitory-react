@@ -25,7 +25,7 @@ export default class Notice extends Component{
         return (
             <div style={{overflow: 'hidden', padding: 20, 'position':'relative'}}>
 				<DynamicTitle title="公告管理" {...this.props}/>
-                <Button className='sendNews' type="primary" onClick={() => {
+                <Button className='postNotice' type="primary" onClick={() => {
                     const {actions:{setNoticeShow}} = this.props
                     setNoticeShow({
                         show: true,
