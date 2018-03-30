@@ -30,14 +30,14 @@ export default class Access extends Component{
 
     static menus = [{
         key: 'Visit',
-        id: 'Visit',
+        id: 'visit',
         path: '/access',
         name: '来访人登记',
         exact: true,
         icon: <Icon name="address-card-o"/>
     },{
         key: 'Goods',
-        id: 'Goods',
+        id: 'goods',
         path: '/access/goods',
         name: '外带物品登记',
         exact: true,

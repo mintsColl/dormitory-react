@@ -1,13 +1,60 @@
 import React, {Component} from 'react';
-import {Modal, Row, Col, Form, Notification, Input} from 'antd'
+import {Modal, Row, Col, Form, Notification, Input} from 'antd';
+import moment from 'moment';
 const FormItem = Form.Item
 class SendOrder extends Component{
     constructor(props){
         super(props);
     }
     ok(){
-        const {actions: {setWriteShow}} = this.props;
-        setWriteShow({show:false})
+        const {actions: {setWriteShow, isFresh, postRepair, putRepair},form: {validateFields}, showOrder = {type: 'add'}, editData} = this.props;
+        validateFields(async (err, values) => {
+            if (!err) {
+                if (showOrder.type === 'add') {
+                    let data = {
+                        code: moment().format("YYYYMMDDHHmmss"),
+                        content: values['content'],
+                        person: values['person'],
+                        place: values['place'],
+                        tel: values['tel'],
+                        remark: values['remark']
+                    }
+                    let rst = await postRepair({}, data);
+                    if (rst[0].status === 'ok') {
+                        Notification.success({
+                            message: '报修成功'
+                        })
+                        isFresh(true);
+                        setWriteShow({show:false});
+                    }else{
+                        Notification.success({
+                            message: '报修失败'
+                        })
+                    }
+                }else{
+                    let data = {
+                        code: editData.code,
+                        content: values['content'],
+                        person: values['person'],
+                        place: values['place'],
+                        tel: values['tel'],
+                        remark: values['remark']
+                    }
+                    let rst = await putRepair({}, data);
+                    if (rst[0].status === 'ok') {
+                        Notification.success({
+                            message: '报修成功'
+                        })
+                        isFresh(true);
+                        setWriteShow({show:false});
+                    }else{
+                        Notification.success({
+                            message: '报修失败'
+                        })
+                    }
+                }
+            }
+        })
     }
     cancel(){
         const {actions: {setWriteShow}} = this.props;

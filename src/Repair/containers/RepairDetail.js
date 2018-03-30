@@ -5,7 +5,8 @@ import {DynamicTitle} from '../../_platform/layout/DynamicTitle'
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux'
 import {actions as platformActions} from '../../_platform/store/global';
-import {actions} from '../store/AcceptOrder'
+import {actions} from '../store/AcceptOrder';
+import {actions as actions2} from '../store/WriteOrder'
 import {OrderTable, AcceptOrder} from '../components/RepairDetail'
 @connect(
     state => {
@@ -13,7 +14,7 @@ import {OrderTable, AcceptOrder} from '../components/RepairDetail'
         return {...acceptOrder}
     },
     dispatch => ({
-        actions: bindActionCreators({...platformActions, ...actions}, dispatch)
+        actions: bindActionCreators({...platformActions, ...actions, ...actions2}, dispatch)
     })
 )
 export class RepairDetail extends Component{

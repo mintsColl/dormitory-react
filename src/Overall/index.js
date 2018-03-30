@@ -30,14 +30,14 @@ export default class Overall extends Component{
 
     static menus = [{
         key: 'News',
-        id: 'MANAGE.NEWS',
+        id: 'news',
         path: '/overall',
         name: '新闻管理',
         exact: true,
         icon: <Icon name="calendar-check-o"/>
     },{
         key: 'Notice',
-        id: 'MANAGE.NOTICE',
+        id: 'notice',
         path: '/overall/notice',
         name: '公告管理',
         exact: true,

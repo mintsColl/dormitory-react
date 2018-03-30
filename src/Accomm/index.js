@@ -29,7 +29,7 @@ export default class Accomm extends Component{
     }
     static menus = [{
         key: 'Distri',
-        id: 'ACCOMM.DISTRI',
+        id: 'distri',
         path: '/accomm',
         name: '分配宿舍',
         exact: true,

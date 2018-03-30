@@ -20,6 +20,12 @@ const TabPane = Tabs.TabPane
     })
 )
 export class WriteOrder extends Component{
+    componentDidMount(){
+        const {actions: {getRepair, saveRepair}} = this.props;
+        getRepair().then(rst => {
+            saveRepair(rst);
+        });
+    }
     render(){
         const {showOrder = {show:false}} = this.props;
         return (

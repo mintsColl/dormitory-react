@@ -30,14 +30,14 @@ export default class Tools extends Component{
 
     static menus = [{
         key: 'Borrow',
-        id: 'Borrow',
+        id: 'borrow',
         path: '/tools',
         name: '工具借用',
         exact: true,
         icon: <Icon name="hand-lizard-o"/>
     },{
         key: 'Receive',
-        id: 'Receive',
+        id: 'receive',
         path: '/tools/receive',
         name: '工具领用',
         exact: true,

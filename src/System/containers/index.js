@@ -1,4 +1,5 @@
 import Building from './Building';
 import DorAdmin from './DorAdmin';
 import Dormitory from './Dormitory';
-export {Building, DorAdmin, Dormitory}
+import Permission from './Permission';
+export {Building, DorAdmin, Dormitory, Permission}

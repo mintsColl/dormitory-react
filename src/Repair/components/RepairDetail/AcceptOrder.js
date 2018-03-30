@@ -42,7 +42,7 @@ export default class AcceptOrder extends Component{
         title: '报修单编号',
         dataIndex: 'code',
         key: 'code',
-        width: '10%'
+        width: '15%'
     },{
         title: '报修内容',
         dataIndex: 'content',

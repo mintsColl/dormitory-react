@@ -4,8 +4,7 @@ import {Icon} from 'react-fa';
 import moment from 'moment';
 export default class DeleteReceive extends Component{
     ok(){
-        const {actions: {deleteData, deleteShow}, deleteRows} = this.props;
-        console.log("deleteRows:",deleteRows);
+        const {actions: {deleteData, deleteShow, isFresh}, deleteRows} = this.props;
         let promises = deleteRows.map((item, index) => {
             return deleteData({receive_name: item.receive_name})
         })
@@ -15,6 +14,7 @@ export default class DeleteReceive extends Component{
                     message: '批量删除成功'
                 })
                 deleteShow(false);
+                isFresh(true)
             }else{
                 Notification.warning({
                     message: '批量删除失败'

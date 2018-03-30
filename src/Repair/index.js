@@ -29,34 +29,34 @@ export default class Repair extends Component{
 	}
     static menus = [{
         key: 'WriteOrder',
-        id: 'WriteOrder',
+        id: 'order',
         name: '报修单管理',
         exact: true,
         path: '/repair',
         icon: <Icon name="calendar-check-o"/>
     },{
         key: 'repair',
-        id: 'repair',
+        id: 'fix',
         name: '维修管理',
         exact: true,
         icon: <Icon name="calendar-check-o"/>,
         children: [{
             key: 'RepairDetail',
-            id: 'RepairDetail',
+            id: 'detail',
             name: '维修查看',
             path: '/repair/detail',
             icon: <Icon name="tasks" />,
             exact: true
         },{
             key: 'RepairProgress',
-            id: 'RepairProgress',
+            id: 'progress',
             name: '维修进度',
             path: '/repair/progress',
             icon: <Icon name="level-up" />,
             exact: true
         },{
             key: 'RepairEvalute',
-            id: 'RepairEvalute',
+            id: 'evalute',
             name: '维修评价',
             path: '/repair/evalute',
             icon: <Icon name="pencil-square" />,

@@ -3,9 +3,40 @@ import {Menu, Tooltip} from 'antd';
 import {Icon} from 'react-fa';
 import './Header.less';
 import {Link} from 'react-router-dom';
-
+import {getCookie, isCookieKey} from '../cookie';
 export default class Header extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            login: [],
+            name: ''
+        }
+    }
 	render() {
+        let login, perm;
+        if (isCookieKey('login')) {
+            login = JSON.parse(getCookie('login'));
+        }
+        if (isCookieKey('keys')) {
+            perm = JSON.parse(getCookie('keys'));
+        }
+        let name = '';
+        switch (login && login[0].flag) {
+            case 'stu':{
+                name = login[0].stu_name;
+                break;
+            }
+            case 'dor':{
+                name = login[0].doradmin_name;
+                break;
+            }
+            case 'admin':{
+                name = login[0].rel_name;
+                break;
+            }
+            default:
+
+        }
 		const {match: {params: {module = ''} = {}} = {}} = this.props;
 		const ignore = Header.ignoreModules.some(m => m === module);
 		if (ignore) {
@@ -23,21 +54,27 @@ export default class Header extends Component {
 				      mode="horizontal">
 					{
 						Header.menus.map(menu => {
-								return (
-									<Menu.Item
-										key={menu.key}
-										className="nav-item">
-										<Link to={menu.path}>
-											{menu.icon}
-											<span className="title">{menu.title}</span>
-										</Link>
-									</Menu.Item>)
+                            let has = false;
+                            if (perm) {
+                                has = perm.some(key => key === menu.id);
+                            }
+                                if ((perm && login) && (has || login[0].flag === 'admin')) {
+                                    return (
+                                        <Menu.Item
+                                            key={menu.key}
+                                            className="nav-item">
+                                            <Link to={menu.path}>
+                                                {menu.icon}
+                                                <span className="title">{menu.title}</span>
+                                            </Link>
+                                        </Menu.Item>)
+                                }
                             })
 					}
 				</Menu>
 				<div className="head-right">
 					<div className="head-info">
-						<a className="user">李明阳</a>
+						<a className="user">{name}</a>
 						<Icon name="sign-out" title="退出登录" onClick={this.signOut.bind(this)}/>
 					</div>
 					{/* <div className="head-fn">
@@ -77,43 +114,43 @@ export default class Header extends Component {
 
 	static menus = [{
 		key: 'dashboard',
-		id: 'DISPLAY',
+		id: 'dashboard',
 		title: '综合展示',
 		path: '/home',
 		icon: <Icon name="map"/>
 	}, {
 		key: 'overall',
-		id: 'MANAGE',
+		id: 'overall',
 		title: '综合管理',
 		path: '/overall',
 		icon: <Icon name="cubes"/>,
 	}, {
 		key: 'repair',
-		id: 'REPAIR',
+		id: 'repair',
 		title: '报修和维修管理',
 		path: '/repair',
 		icon: <Icon name="wrench"/>
 	}, {
-		key: 'design',
-		id: 'DESIGN',
+		key: 'accomm',
+		id: 'accomm',
 		title: '学生住宿管理',
 		path: '/accomm',
 		icon: <Icon name="bed"/>,
 	}, {
-		key: 'lock',
+		key: 'access',
 		title: '门禁管理',
-		id: 'LOCK',
+		id: 'access',
 		path: '/access',
 		icon: <Icon name="lock"/>
 	}, {
-		key: 'video',
+		key: 'tools',
 		title: '工具管理',
-		id: 'VIDEO',
+		id: 'tools',
 		path: '/tools',
 		icon: <Icon name="gavel"/>
 	},{
 		key: 'setup',
-		id: 'SETUP',
+		id: 'setup',
 		title: '系统配置',
 		path: '/system',
 		icon: <Icon name="gear"/>

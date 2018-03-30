@@ -3,6 +3,7 @@ import {actionsMap} from '../../_platform/store/util'
 import CreateDormitoryReducer, {actions as CreateDormitoryActions} from './CreateDormitory';
 import DorAdminReducer, {actions as DorAdminActions} from './DorAdmin';
 import DormitoryReducer, {actions as DormitoryActions} from './Dormitory';
+import permissionReducer, {actions as permissionActions} from './Permission';
 export default handleActions({
     [combineActions(...actionsMap(CreateDormitoryActions))]: (state = {}, action) => ({
         ...state,
@@ -15,5 +16,9 @@ export default handleActions({
     [combineActions(...actionsMap(DormitoryActions))]: (state, action) => ({
         ...state,
         dormitory: DormitoryReducer(state.dormitory, action)
+    }),
+    [combineActions(...actionsMap(permissionActions))]: (state, action) => ({
+        ...state,
+        permission: permissionReducer(state.permission, action)
     })
 },{})

@@ -29,24 +29,31 @@ export default class System extends Component{
     }
     static menus = [{
         key: 'DorAdmin',
-        id: 'DorAdmin',
+        id: 'dorAdmin',
         name: '宿管信息',
         exact: true,
         path: '/system',
         icon: <Icon name='users' />
     },{
         key: 'Building',
-        id: 'Building',
+        id: 'building',
         name: '宿舍楼信息',
         exact: true,
         path: '/system/building',
         icon: <Icon name="building"/>
     },{
         key: 'Dormitory',
-        id: 'Dormitory',
+        id: 'dormitory',
         name: '宿舍信息',
         exact: true,
         path: '/system/dormitory',
         icon: <Icon name="home"/>
+    },{
+        key: 'Permission',
+        id: 'permission',
+        name: '权限配置',
+        exact: true,
+        path: '/system/permission',
+        icon: <Icon name = "cogs" />
     }]
 }

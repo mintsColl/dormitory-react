@@ -1,49 +1,63 @@
 import React, {Component} from 'react';
-import {Table, Modal, Notification, Divider} from 'antd';
+import {Table, Modal, Notification, Divider, Spin, Popconfirm} from 'antd';
 import {Icon} from 'react-fa'
 export default class OrderTable extends Component{
     constructor(props){
         super(props)
         this.state = {
-            dataSource: []
+            dataSource: [],
+            spin: false
         }
     }
     render(){
         return(
-            <Table
-                bordered
-                columns = {this.columns}
-                dataSource = {this.state.dataSource}
-                rowKey = 'code'
-            />
+            <Spin spinning = {this.state.spin}>
+                <Table
+                    bordered
+                    columns = {this.columns}
+                    dataSource = {this.state.dataSource}
+                    rowKey = 'code'
+                />
+            </Spin>
         )
     }
-    componentDidMount(){
-        let dataSource = [{
-            code: '01',
-            content: '水龙头损坏',
-            person: '李明阳',
-            place: '1#303',
-            tel: '18513117207',
-            remark: '洗漱间'
-        }]
-        this.setState({dataSource})
+    componentWillReceiveProps(nextProps){
+        const {actions: {isFresh}, fresh} = nextProps;
+        if (fresh) {
+            this.componentDidMount();
+            isFresh(false);
+        }
+    }
+    async componentDidMount(){
+        const {actions: {getRepair}} = this.props;
+        this.setState({spin: true})
+        let rst = await getRepair();
+        this.setState({dataSource: rst, spin: false})
     }
     edit(record){
         const {actions: {setEditData, setWriteShow}} = this.props;
         setWriteShow({show: true, type: 'edit'})
         setEditData(record)
     }
+    async confirm(record){
+        const {actions: {deleteRepair}} = this.props;
+        let rst = await deleteRepair({code: record.code});
+        if (rst[0].status === 'ok') {
+            Notification.success({
+                message: '删除成功',
+                duration: '1s'
+            })
+            this.componentDidMount();
+        }
+    }
     columns = [{
         title: '报修单编号',
         dataIndex: 'code',
         key: 'code',
-        width: '10%'
     },{
         title: '报修内容',
         dataIndex: 'content',
         key: 'content',
-        width: '35%'
     },{
         title: '报修人',
         dataIndex: 'person',
@@ -68,7 +82,9 @@ export default class OrderTable extends Component{
             <div>
                 <a><Icon name = 'edit' onClick = {this.edit.bind(this, record)}></Icon></a>
                 <Divider type = 'vertical'/>
-                <a><Icon name = 'trash'></Icon></a>
+                <Popconfirm title='确认删除吗' okText = '是' cancelText='否' onConfirm = {this.confirm.bind(this, record)}>
+                    <a><Icon name = 'trash'></Icon></a>
+                </Popconfirm>
             </div>
         )
     }]

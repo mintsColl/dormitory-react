@@ -6,7 +6,8 @@ import {actions} from '../store/login'
 import {injectReducer} from '../../store'
 import {Link} from 'react-router-dom'
 import reducer from '../store/login'
-import './Login.less'
+import './Login.less';
+import {addCookie, deleteCookie} from '../../_platform/cookie';
 const FormItem = Form.Item;
 @connect(
     state => {
@@ -25,7 +26,7 @@ class Login extends Component {
 
     login(){
         const {
-            actions:{getLogin},
+            actions:{getLogin, getPermission},
             form:{validateFields}
         } = this.props;
         validateFields(async (err, values) => {
@@ -34,9 +35,18 @@ class Login extends Component {
                     user_name:values["userName"],
                     user_pass:values["password"]
                 }
-                let rst = await getLogin(login_info)
-                let res = JSON.parse(rst)
-                if (res && res[0].user_name) {
+                let res = await getLogin(login_info);
+                if (res.length > 0) {
+                    let permission = await getPermission({perm_name: res[0].flag});
+                    addCookie('keys', '[]', 1000000000);
+                    if (permission && permission.length > 0) {
+                        let keys = permission[0].perm_value;
+                        deleteCookie('key');
+                        addCookie('keys', keys, 1000000000);
+                    }
+                    let data = JSON.stringify(res)
+                    deleteCookie('login');
+                    addCookie('login', data, 1000000000);
                     Notification.success({
                         icon: <Icon type="smile-o" style={{ color: '#108ee9' }}/>,
                         duration:2,
